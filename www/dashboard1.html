@@ -26,14 +26,13 @@
 	<link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
 	<style>
 body {
-	background-image:url(img/s72.png);
-	#background-image:none;
+	background-image:url(img/s71.png);
 	background-size: 100% 100%;
     width: 100%;
     height: 100%;
     height: auto !important;
     min-height:100%;
-	background-color: white;
+	
 	height: 100%;
 }	
 	
@@ -75,11 +74,8 @@ body {
 	color:white;
 }
 .holiday {
-	background-color:white;
-	color:#34495E;
-	border-color:white;
-	box-shadow:none;
-	-webkit-box-shadow:none;
+	background-color:#34495E;
+	color:white;
 }
 .navbar-custom{
 	background-color: #34495E;
@@ -103,11 +99,6 @@ a {
     text-align: center;
 	text-transform:none;
 }
-.stitle {
-	font-size:16px;
-	font-family: 'open_sans','Open Sans',sans-serif;
-	letter-spacing: 2.5px;
-}
 
 </style>
     <title>GreyBox School</title>
@@ -123,7 +114,7 @@ a {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand stitle" href="dashboard.html" id="sname" style="margin-left:10px;">GreyBox App</a><a class="navbar-brand stitle" style="font-size:10px;letter-spacing:1px;font-weight:300;" id="curr_dt"></a>
+      <a class="navbar-brand" href="dashboard.html">GreyBox App</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
@@ -139,12 +130,12 @@ a {
 </nav>
 <div class="container">
 
-    <div class="row" style="margin-top:20px;">
+    <div class="row">
 	
         <div class="col-xs-6 slimL fixedH " >
 			<a href="./m_attendance.html">
 			<div class="panel panel-primary slim holiday"><br>
-				<i id='users' class="fa fa-2x fa-user"></i>
+				<i id='users' class="fa fa-3x fa-user"></i>
 				<h6>Attendance</h6>
 				<p></p>
 			</div>	
@@ -153,7 +144,7 @@ a {
 		<div class="col-xs-6 slimR fixedH">
 			<a href="./noticeboard.html">
 			<div class="panel panel-primary slim holiday"><br>
-				<i id='users' class="fa fa-2x fa-sticky-note"></i>
+				<i id='users' class="fa fa-3x fa-sticky-note"></i>
 				<h6>Notice Board</h6>
 				<p></p>
 			</div>
@@ -162,9 +153,12 @@ a {
 		 <div class="col-xs-6 slimL fixedH">
 			<a href="./communicate1.html">
 			<div class="panel panel-primary slim holiday"><br>
-				<i class="fa fa-2x fa-comment" ></i>	
-				
-				<h6 id="cht">Chat</h6>
+				<!---<i id='oldm' class="fa fa-3x fa-comment" ></i>	---->
+				<span  class="fa-stack fa-x" >
+					<i  class="fa fa-3x fa-comment fa-stack-3x"></i>
+					<strong id='newm' class="fa-stack-1x  fa-comment" style="color:red;display:none;">+1</strong>
+				</span>
+				<h6>Chat</h6>
 				<p></p>
 			</div>	
 			</a>
@@ -172,25 +166,16 @@ a {
 		<div class="col-xs-6 slimR fixedH">
 			<a href="./homework.html">
 			<div class="panel panel-primary slim holiday"><br>
-				<i id='users' class="fa fa-2x fa-edit"></i>
+				<i id='users' class="fa fa-3x fa-edit"></i>
 				<h6>Homework</h6>
 				<p></p>
 			</div>	
 			</a>
 		</div>
 		<div class="col-xs-6 slimL fixedH">
-			<a href="./fee.html">
-			<div class="panel panel-primary slim holiday"><br>
-				<i id='users' class="fa fa-2x fa-rupee"></i>
-				<h6>Fee</h6>
-				<p></p>
-			</div>	
-			</a>
-		</div>
-		<div class="col-xs-6 slimR fixedH">
 			<a href="./holiday.html">
 			<div class="panel panel-primary slim holiday"><br>
-				<i id='users' class="fa fa-2x fa-calendar"></i>
+				<i id='users' class="fa fa-3x fa-calendar"></i>
 				<h6>Holiday</h6>
 				<p></p>
 			</div>	
@@ -198,7 +183,7 @@ a {
 		</div>
 	</div>
 	<div class="footer">
-  <p>powered by <b style="color:#E87E04;">GreyBox Software</b></p><br><br>
+  <p>powered by <b style="color:#E87E04;">GreyBox Software</b></p>
 </div>
 </div>
 </form>	
@@ -209,10 +194,6 @@ a {
 
 <script async defer type="text/javascript">
 app.initialize();
-//var a = JSON.parse(localStorage.basicInfo);
-document.getElementById("sname").innerHTML = localStorage.sname.split(" ")[0];
-document.getElementById("curr_dt").innerHTML = formatDate(new Date());
-
 getNewMsg1(localStorage.getItem("sid") ,localStorage.getItem("mid"));
 
 
@@ -225,13 +206,8 @@ function getNewMsg1(sid,mid){
 			try {
 				var dataArray=JSON.parse(req.responseText);
 				if(dataArray.length > 0){
-					var l =0;
-					if(dataArray.length <10 )
-						l = dataArray.length;
-					else
-						l = "10+";
 					
-					document.getElementById("cht").innerHTML += " (" + l + ")";
+					document.getElementById("newm").style.display = "block";
 				}
 								
 			} catch (e) {
