@@ -130,7 +130,8 @@ body {
     background-color: #555;
 }
 .navbar-custom{
-	background-color: #34495E;
+	background-color:#34495E;;
+	
 }
 a{
 	color:white
@@ -153,14 +154,15 @@ button:focus {
 	font-size:12px;
 	height:30px;
 	font-weight:bold;
-	padding-left: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
     padding-top: 5px;
 	border: 1px solid #d3d3d3;
 	border-bottom:none;
 	padding-bottom:10px;
 }
 .trhead {
-	background: #aa8fd1;<!---#4285f4;--->
+	background: #337ab7;<!---#4285f4;--->
 	font-family: 'open_sans','Open Sans',sans-serif;	
 	letter-spacing: 1px;
 	color:white;
@@ -217,20 +219,32 @@ button:focus {
 					
 					<ul class="chat"  id="parent_ul" style="background-color:white;" >
 					
-					<div class="row trhead">Fee Schedule</div>
+					<div class="row trhead">Fee Schedule <span class='pull-right' style="font-size:12px;">Session (2018-19)&nbsp;&nbsp;&nbsp;</span></div>
 					<div id="bdetails">
-					<div class="row trbody"><span id="rcvd">Received: 0</span><span id='bal' class="pull-right" style="padding-right:15px;"></span></div>
+					<div class="row trbody">Received: <span id="rcvd" style='margin-left:10px;'> 0</span><span id='btotal' class="pull-right" style="padding-right:15px;"></span></div>
 					<div class="row trbody" style="height:100%" >
-					<div  id='billing'>
-							<div class="valtext" style="text-align:center;padding-top:1px;"> No fee info available</div>
-					</div>		
+					 <div class="content table-responsive table-full-width">
+                        <table class="table table-hover table-striped sortable" key="" >
+                           <thead>
+							<tr id='phead1'>
+								<th>Period</th>
+								<th>Fee(<i id='users' class="fa fa-x fa-rupee"></i>)</th>
+								<th>Last Date</th>
+							<tr>
+                           </thead>
+                           <tbody  style="margin-top:10px;" id="billing">
+								
+						   </tbody>
+                        </table>
+                    </div>
+							
 					</div>
-					<div class="row trbody" style="border: 1px solid #d3d3d3;"><span id='btotal'>Total: 0</span></div>
+					<div class="row trbody" style="border: 1px solid #d3d3d3;">Balance:(<i id='users' class="fa fa-x fa-rupee"></i>) <span id='bal' style='margin-left:10px;'> 0</span></div>
 					</div>
 				</ul>
 				<br>
-				<ul class="chat valtext" style="font-size:14px;font-weight:300;">Transactions</ul>
-				<div class="row  valtext" id="tdefault" style="text-align:center;padding-top:1px;">No transactions available.<br><br></div>
+				
+				<div class="row  valtext" id="tdefault" style="padding-top:1px;padding-left:50px;">Any Individual fee/panelty is not included.<br> For detailed break up, please contact school management.<br><br></div>
 				<div style="display:block;margin-bottom:15px;" id="tdetails" >
 		
 				</div>
@@ -250,9 +264,12 @@ function getFee(sid){
 	req.onreadystatechange = function() {
 		if (req.readyState == 4 && req.status == 200) {
 			try {
-				document.getElementById("billing").innerHTML = req.responseText;
-								
-			
+				var data = JSON.parse(req.responseText);
+				var total = data["total"];
+				document.getElementById("billing").innerHTML = data["txt"];
+				document.getElementById("btotal").innerHTML = "Total : " + total;		
+				document.getElementById("rcvd").innerHTML = data["rcvd"];	
+			    document.getElementById("bal").innerHTML = total - data["rcvd"];
 								
 			} catch (e) {
 				console.log("Exception::-"+e.toString());
