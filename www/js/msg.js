@@ -1,4 +1,4 @@
-var base_url = "http://greyboxerp.in/sbsjapp/";
+var base_url = "http://greyboxerp.in/demoapp/";
 
 function getSID(){
 	var sid = localStorage.getItem("sid");
