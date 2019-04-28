@@ -17,7 +17,7 @@
       <title>GreyBox Admin</title>
       <style>
 	  body {
-	background-image:url(img/s71.png);
+	background-image:url(img/s72.png);
 	background-size: 100% 100%;
     width: 100%;
     height: 100%;
@@ -36,9 +36,9 @@ body {
     margin: 0;
 	padding-left:0px;
 	padding-right:0px;
-    padding-top: 5px;
+    
 	padding-bottom: 10px;
-	border-bottom: 1px dotted #B3A9A9;
+	border-top: 1px dotted #B3A9A9;
 	
 }
 .chat:first-child{
@@ -46,9 +46,9 @@ body {
     margin: 0;
 	padding-left:0px;
 	padding-right:0px;
-    padding-top: 45px;
+    
 	padding-bottom: 5px;
-	border-bottom: 1px dotted #B3A9A9;
+	border-top: 1px dotted #B3A9A9;
 }
 
 .chat li
@@ -126,6 +126,32 @@ a{
 	padding-bottom:10px;
 	border-bottom: 1px dotted #B3A9A9;
 }
+ul > div> a {color:#636972;}
+.trbody{
+	font-family: 'open_sans','Open Sans',sans-serif;	
+	letter-spacing: 1px;
+	font-size:12px;
+	height:30px;
+	font-weight:bold;
+	padding-left: 10px;
+	padding-right: 10px;
+    padding-top: 5px;
+	border: 1px solid #d3d3d3;
+	border-bottom:none;
+	padding-bottom:10px;
+}
+.trhead {
+	background: #337ab7;<!---#4285f4;--->
+	font-family: 'open_sans','Open Sans',sans-serif;	
+	letter-spacing: 1px;
+	color:white;
+	font-size:14px;
+	height:30px;
+	font-weight:bold;
+	border: 1px solid #d3d3d3;
+	margin:-1px;
+	margin-top:-2px;
+}
       </style>
    </head>
    <body >
@@ -139,61 +165,14 @@ a{
     
   </div>
 </nav>
-         <div class="content" >
-         <div class="row">
-	<div class="panel panel-primary">
-		<div class="panel-body" >
-			<div id="menu">			
-			<ul class="chat" id="chat" style="margin-bottom:10px;" onclick="showExam()">
-				<div class="fc valtext">Periodic Test 1</div>
+       <div class="container">
+    		<div id="menu">			
+			<ul class="chat" id="chat" style="margin-bottom:10px;text-align:center" >
+				<i class="fa fa-spinner fa-spin" style="font-size:24px;color:black;"></i>
 			</ul>
-			<ul class="chat" id="chat" style="margin-bottom:10px;">
-				<div class="fc valtext">Periodic Test 2</div>
-			</ul>
-			<ul class="chat" id="chat" style="margin-bottom:10px;">
-				<div class="fc valtext">Half  Yearly</div>
-			</ul>
-			<ul class="chat" id="chat" style="margin-bottom:10px;">
-				<div class="fc valtext">Periodic Test 3</div>
-			</ul>
-			<ul class="chat" id="chat" style="margin-bottom:10px;">
-				<div class="fc valtext">Annual Exams</div>
-			</ul>
+				
 			</div>
 			
-			<div id="exams" style="display:none">
-			<ul class="chat" id="chat" style="margin-bottom:10px;" onclick="goback()">
-				<div class="fc valtext">SASBS SCHOOL</div>
-			</ul>
-			<ul class="chat" id="chat" style="margin-bottom:10px;">
-				<div class="fc valtext">Periodic Test 1</div>
-			</ul>
-				<div class="row" style="padding-bottom:15px;border-bottom: 1px dotted #B3A9A9;">
-					<div class="col-xs-4 valtext">Subjects</div>
-					<div class="col-xs-4 valtext">Marks</div>
-					<div class="col-xs-4 valtext">Max. Marks</div>
-				</div>
-				<div class="row marks">
-					<div class="col-xs-4 ">English</div>
-					<div class="col-xs-4 "><b>7</b></div>
-					<div class="col-xs-4 ">10</div>
-				</div>
-				<div class="row marks">
-					<div class="col-xs-4 ">Hindi</div>
-					<div class="col-xs-4 "><b>8</b></div>
-					<div class="col-xs-4 ">10</div>
-				</div>
-				<div class="row marks">
-					<div class="col-xs-4 ">Maths</div>
-					<div class="col-xs-4 "><b>10</b></div>
-					<div class="col-xs-4 ">10</div>
-				</div>
-				<div class="row marks">
-					<div class="col-xs-4 ">EVS</div>
-					<div class="col-xs-4 "><b>9</b></div>
-					<div class="col-xs-4 ">10</div>
-				</div>
-			</div>
 		</div>	
 	</div>
 </div>	
@@ -202,9 +181,70 @@ a{
    </body>
    <script type="text/javascript" src="cordova.js"></script>
    <script type="text/javascript" src="js/index.js"></script>
-   <script type="text/javascript" src="js/msg.js"></script>
+   <script type="text/javascript" src="js/dataTbl.js"></script>
    <script>
+   var sid = localStorage.getItem("sid");
+   var eid = getParameterByName("id");
+   if(eid!=undefined)
+		getExams(eid,sid);
+	else	
+		getCID(sid);
    
+   function getExams(eid,sid){
+		getData('','','SELECT s.tag, r.marks from s_result_tbl r, s_subjects s where s.id=r.subject and r.sid='+sid+ ' and r.examid='+eid,1,0,104);
+   }
+   
+   function getCID(sid){
+		getData('','','SELECT cid from s_student_tbl where admn='+sid,1,0,101);
+	}
+	
+	function custom(data,p){
+		var d = data;
+		if(p==101){
+			var cid = d[0]['cid'];
+			getData('','','SELECT appresultcode from s_class_master where id='+cid,1,0,102);		
+			}
+		else if(p==102){
+			var apprc = d[0]['appresultcode'];
+			var arr = apprc.split(",");
+			var output = "";
+			for (i=0; i<(arr.length-1); i++)
+			{
+				output = output + "'" + arr[i] + "'," ;
+			}
+			output = output + "'" + arr[arr.length-1] + "'" ;
+			getData('','','SELECT id,ename,tag from s_exams_tbl where subid=0 and tag in ( '+output + ')',1,0,103);		
+		}
+        else if(p==103){
+		    var txt = '<div class="row" style="margin-top:85px;background-color:white">';
+			for (i=0; i<d.length; i++){
+				try{
+					txt += '<ul class="chat" id="chat" style="margin-bottom:10px;"><div class="fc valtext"><a href="./exams.html?sid='+sid+'&id='+d[i]['id']+'&tag='+d[i]['tag']+'" ><b>'+ d[i]['ename'] +'</b></a></div></ul>';
+				} catch (e){}
+			}
+			txt += "</div>";
+			document.getElementById("menu").innerHTML = txt;
+		}	
+		else if(p==104){
+		    var total = 0;
+		    var txt = '<div class="row" style="margin-top:85px;">';
+		    txt += '<div class="col-sm-5" style="padding-right:0px;padding-left:0px;"><p class="button btn-primary" style="width: 20%;text-align: center;margin-left: 10px;" onclick="window.history.back();">BACK</p>';
+			txt += '<div class="panel panel-primary" style="background-color:none;  margin-left:10px; margin-right:10px;">';
+			txt += '<ul class="chat"  id="parent_ul" style="background-color:white;" ><div class="row trhead" style="text-align:center;">Result for '+getParameterByName("tag")+'</div>';
+			for (i=0; i<d.length; i++){
+				try{
+					txt += '<ul class="chat" id="chat" ><div class="fc valtext"><span style="width:50%;padding-left:50px;" >'+ d[i]['tag'] +'</span><span style="width:50%;padding-left:50px;" >'+d[i]['marks']+'</span></div></ul>';
+					total += parseFloat(d[i]['marks']);
+				} catch (e){}
+			}
+			txt += '<ul class="chat" id="chat" style="margin-bottom:10px;border-top:1px solid #d3d3d3;"><div class="fc valtext"><span style="width:50%;padding-left:50px;color:#337ab7;" ><b>TOTAL</b></span><span style="width:50%;padding-left:50px;color:#337ab7;" ><b>'+total+'</b></span></div></ul>';
+			//txt += '<ul class="chat" id="chat" style="margin-bottom:10px;border-top:1px solid #d3d3d3;border-bottom:1px solid #d3d3d3;"><div class="fc valtext"><span style="width:50%;padding-left:50px;color:#337ab7;" ><b>RANK</b></span><span style="width:50%;padding-left:50px;color:#337ab7;" ><b>'+ "" +'</b></span></div></ul>';
+			txt += "</div></div></div></ul>";
+			document.getElementById("menu").innerHTML = txt;
+		
+		}
+	}
+	
 		function showExam(){
 			document.getElementById("menu").style.display="none";
 			document.getElementById("exams").style.display="block";
