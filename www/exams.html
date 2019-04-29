@@ -108,14 +108,14 @@ a{
 }
 .valtext {
 	font-family: 'open_sans','Open Sans',sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
-	color: #636972;
+	color: #337ab7;
 	contenteditable = true;
 	box-shadow: none;
 	border-bottom: 0px;
 	border-top: 0px;
-	border-left: 0px;
+	
 	border-right: 0px;
 	margin-bottom:0px;
 	letter-spacing: 1px;
@@ -152,6 +152,30 @@ ul > div> a {color:#636972;}
 	margin:-1px;
 	margin-top:-2px;
 }
+td,th {
+	padding:5px;
+	padding-left:20px;
+}
+table {
+	border: 2px solid #d3d3d3;
+}
+tr {
+	border-top: 1px solid #d3d3d3;
+	height:35px;
+}
+tr:nth-child(2){
+	padding-top:15px;
+}
+table {
+	border-color: #337ab7;
+}
+td {
+	border-left: 1px solid #337ab7;
+}
+td:first-child{
+	padding-left:10px;
+	
+}
       </style>
    </head>
    <body >
@@ -166,7 +190,8 @@ ul > div> a {color:#636972;}
   </div>
 </nav>
        <div class="container">
-    		<div id="menu">			
+    		<div id="menu">	
+			
 			<ul class="chat" id="chat" style="margin-bottom:10px;text-align:center" >
 				<i class="fa fa-spinner fa-spin" style="font-size:24px;color:black;"></i>
 			</ul>
@@ -185,13 +210,17 @@ ul > div> a {color:#636972;}
    <script>
    var sid = localStorage.getItem("sid");
    var eid = getParameterByName("id");
+   var tag = getParameterByName("tag");
+   var cid = getParameterByName("cid");
+   
+   
    if(eid!=undefined)
 		getExams(eid,sid);
-	else	
-		getCID(sid);
+	
    
    function getExams(eid,sid){
-		getData('','','SELECT s.tag, r.marks from s_result_tbl r, s_subjects s where s.id=r.subject and r.sid='+sid+ ' and r.examid='+eid,1,0,104);
+		getResult(sid,eid,tag,cid);
+		//getData('','','SELECT s.tag, r.marks from s_result_tbl r, s_subjects s where s.id=r.subject and r.sid='+sid+ ' and r.examid='+eid,1,0,104);
    }
    
    function getCID(sid){
@@ -201,7 +230,7 @@ ul > div> a {color:#636972;}
 	function custom(data,p){
 		var d = data;
 		if(p==101){
-			var cid = d[0]['cid'];
+			cid = d[0]['cid'];
 			getData('','','SELECT appresultcode from s_class_master where id='+cid,1,0,102);		
 			}
 		else if(p==102){
@@ -219,7 +248,7 @@ ul > div> a {color:#636972;}
 		    var txt = '<div class="row" style="margin-top:85px;background-color:white">';
 			for (i=0; i<d.length; i++){
 				try{
-					txt += '<ul class="chat" id="chat" style="margin-bottom:10px;"><div class="fc valtext"><a href="./exams.html?sid='+sid+'&id='+d[i]['id']+'&tag='+d[i]['tag']+'" ><b>'+ d[i]['ename'] +'</b></a></div></ul>';
+					txt += '<ul class="chat" id="chat" style="margin-bottom:10px;"><div class="fc valtext"><a href="./exams.html?sid='+sid+'&id='+d[i]['id']+'&tag='+d[i]['tag']+'&cid='+cid+'" ><b>'+ d[i]['ename'] +'</b></a></div></ul>';
 				} catch (e){}
 			}
 			txt += "</div>";
