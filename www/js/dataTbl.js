@@ -398,13 +398,13 @@ function getResult(sid,id,tag,cid) {
 				txt += '<caption style="text-align:center"><img src="./img/logo1.png" style="" width="50px"></img>	</caption>';
 				txt += "<caption style='color:#337ab7;padding:2px;'>Class Strength : <b>"+d["st"]+"</b></caption>";
 				txt += "<caption style='color:#337ab7;padding:2px;padding-bottom:10px;'>Test Name : <b>"+tag+"</b></caption>";
-				txt += "<tr class='trhead'><th>Subjects</th><th>Obtained</th><th>Max</th></tr>";
+				txt += "<tr class='trhead'><th>Subjects</th><th>Max</th><th>Obtained</th></tr>";
 				for(var i=0;i<subs.length;i++){
 					txt += "<tr><td class='valtext text-uppercase'>" + subs[i]["subject"] + "</td>";
-					txt += "<td style='font-weight:600;' id=o_"+subs[i]["id"]+"></td><td id=mx_"+subs[i]["id"]+"></td>";
+					txt += "<td id=mx_"+subs[i]["id"]+"></td><td style='font-weight:600;' id=o_"+subs[i]["id"]+"></td>";
 					txt += "</tr>";
 				}
-				txt += "<tr style='border-top: 1px solid #337ab7;'><td><b>TOTAL</b></td><td class='valtext' style='font-weight:600' id='tot'></td><td id='totmax'></td></tr>";
+				txt += "<tr style='border-top: 1px solid #337ab7;'><td><b>TOTAL</b></td><td id='totmax'><td class='valtext' style='font-weight:600' id='tot'></td></td></tr>";
 				txt += "<tr style='border-top: 1px solid #337ab7;'><td>RANK</td><td colspan='2'>"+d["rank"]+"</td></tr>";
 				txt += "</table>";
 				document.getElementById("menu").innerHTML = txt;
