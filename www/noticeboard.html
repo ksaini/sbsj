@@ -150,6 +150,9 @@ a{
 		if(data[i]['img'].trim().length>0)
 			txt += "<img src='"+data[i]['img']+"' class='img-thumbnail'  alt='Notice Image'  />";
 		txt +="</li>";
+		if(id > localStorage["nid"])
+			localStorage["nid"] = id;
+		
 	}
 	nlist.innerHTML = txt + "</ul>";
 	localStorage.setItem("notice", nlist.innerHTML);
