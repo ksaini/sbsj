@@ -405,6 +405,7 @@ function getResult(sid,id,tag,cid) {
 					txt += "</tr>";
 				}
 				txt += "<tr style='border-top: 1px solid #337ab7;'><td><b>TOTAL</b></td><td id='totmax'><td class='valtext' style='font-weight:600' id='tot'></td></td></tr>";
+				txt += "<tr style='border-top: 1px solid #337ab7;'><td>PERCENT</td><td id='per' colspan='2'></tr>";
 				txt += "<tr style='border-top: 1px solid #337ab7;'><td>RANK</td><td colspan='2'>"+d["rank"]+"</td></tr>";
 				txt += "</table>";
 				document.getElementById("menu").innerHTML = txt;
@@ -416,7 +417,7 @@ function getResult(sid,id,tag,cid) {
 					document.getElementById("o_"+marks[i]["id"]).innerHTML = marks[i]["marks"];
 					tot += parseFloat(marks[i]["marks"]);
 				}
-				document.getElementById("tot").innerHTML = tot;
+				document.getElementById("tot").innerHTML = tot.toFixed(1);
 				
 				// Fill Max marks
 				var max = d["max"];
@@ -426,6 +427,7 @@ function getResult(sid,id,tag,cid) {
 					totmax += parseFloat(max[i]["mm"]);
 				}
 				document.getElementById("totmax").innerHTML = totmax;
+				document.getElementById("per").innerHTML = "<b> "+((tot/totmax)*100).toFixed(1) + "%</b>";
 				
 			} catch (e) {
 				console.log("Exception::-"+e.toString());
