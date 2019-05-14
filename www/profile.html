@@ -192,7 +192,8 @@ ul > div {
 <script type="text/javascript" src="js/dataTbl.js"></script>
 
 <script  type="text/javascript">
-getData('','',"SELECT s.admn, s.roll, s.fname ,s.fathername, s.dob, s.admn_dt,s.cn1,s.gender,s.curr_addr as Address , concat(c.classname,'-',c.section) as class from s_student_tbl s, s_class_master c where s.cid=c.id and s.admn = 1875 ;",0,0,1001,localStorage["db"]);
+var sid = localStorage["sid"];
+getData('','',"SELECT s.admn, s.roll, s.fname ,s.fathername, s.dob, s.admn_dt,s.cn1,s.gender,s.curr_addr as Address , concat(c.classname,'-',c.section) as class from s_student_tbl s, s_class_master c where s.cid=c.id and s.admn ="+sid+"  ;",0,0,1001,localStorage["db"]);
 
 function custom(data,p){
 	if(p==1001)
